@@ -1,0 +1,25 @@
+{
+  "name": "quiz-application",
+  "version": "1.0.0",
+  "description": "This is a console quiz application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phabbs/bc-18-QuizApplication-console.git"
+  },
+  "author": "Olasode Abdul-Mumeen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phabbs/bc-18-QuizApplication-console/issues"
+  },
+  "homepage": "https://github.com/phabbs/bc-18-QuizApplication-console#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "commander": "^2.9.0",
+    "inquirer": "^2.0.0",
+    "jsonfile": "^2.4.0"
+  }
+}
