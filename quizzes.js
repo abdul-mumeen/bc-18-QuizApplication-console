@@ -8,6 +8,7 @@ module.exports =
 		this.noOfQuestions = 0;
 		this.questions = [];
 		this.expectedTime = 0;
+		this.answers = [];
 	}
 };
 module.exports.Quizzes.prototype.findQuiz = function(quizName)
@@ -22,10 +23,11 @@ module.exports.Quizzes.prototype.findQuiz = function(quizName)
 			if (quizzes[i].name === quizName)
 			{
 				this.name = quizzes[i].name;
-				this.noOfQuestions = quizzes[i].questions.length;
+				//this.noOfQuestions = quizzes[i].questions.length;
 				this.questions = quizzes[i].questions;
 				this.expectedTime = quizzes[i].expectedTime;
-				//this.noOfQuestions = quizzes[i].noOfQuestions;
+				this.answers = quizzes[i].answers;
+				this.noOfQuestions = quizzes[i].noOfQuestions;
 				found = true;
 				break;
 			}
@@ -39,13 +41,31 @@ module.exports.Quizzes.prototype.takeQuiz = function(quizName)
 	var found = this.findQuiz(quizName);
 	if (found)
 	{
-		inquirer.prompt(this.questions, function(answers)
+		var objQuiz = this;
+		inquirer.prompt(this.questions).then(function(answers)
 		{
-			console.log(this.answers);
-		})
+			if (answers)
+			{
+				respond(objQuiz,answers);
+			}
+		});
 	}
 	else
 	{
-		console.log("Quiz not found " + this.questions);
+		console.log("Quiz not found ");
 	}
 }
+function respond(quiz,answers)
+{
+	var score = 0;
+	var j = 0;
+	for (var i in answers)
+	{
+		if (answers[i] === quiz.answers[j])
+		{
+			score ++;
+		}
+		j++;
+	}
+	return score;
+};

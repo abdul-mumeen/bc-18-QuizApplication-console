@@ -4,15 +4,18 @@
 	"noOfQuestions": 10,
 	"expectedTime": 5,
 	"questions" : [{
-					  "name": "firstName",
+					  "name": "question1",
 					  "message": "What is your first name?",
+					  "type": "rawlist",
 					  "choices": ["Red", "Orange", "Yellow"]
 					},
 					{
-					  "name": "firstName",
-					  "message": "What is your first name?",
+					  "name": "question2",
+					  "message": "What is your last name?",
+					  "type": "rawlist",
 					  "choices": ["Red", "Orange", "Yellow"]
-					}]
+					}],
+	"answers": ["Orange","Yellow"]
 },
 {
 	"name": "chemistry",
