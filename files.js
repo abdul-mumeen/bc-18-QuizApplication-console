@@ -1,3 +1,5 @@
+
+'use strict';
 var fs = require('fs');
 var path = require('path');
 var jsfile = require('jsonfile');
@@ -31,18 +33,16 @@ module.exports =
     }
 
   },
-  writeOjectToFile :function(obj,fileName)
+  writeObjectToFile :function(obj,fileName)
   {
-    jsfile.writeFileSync(fileName,obj, function(err)
+    try
     {
-      if (err)
-      {
-        return false;
-      }
-      else
-      {
-        return true;
-      }
-    });
+      jsfile.writeFileSync(fileName,obj);
+      return true;
+    }
+    catch (err)
+    {
+      return false;
+    }
   }
 };
