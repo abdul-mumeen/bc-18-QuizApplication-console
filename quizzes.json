@@ -1,0 +1,22 @@
+[{
+	"name": "physics",
+	"time": 20,
+	"noOfQuestions": 10,
+	"expectedTime": 5,
+	"questions" : [{
+					  "name": "firstName",
+					  "message": "What is your first name?",
+					  "choices": ["Red", "Orange", "Yellow"]
+					},
+					{
+					  "name": "firstName",
+					  "message": "What is your first name?",
+					  "choices": ["Red", "Orange", "Yellow"]
+					}]
+},
+{
+	"name": "chemistry",
+	"time": 20,
+	"noOfQuestions": 10	
+}
+]
