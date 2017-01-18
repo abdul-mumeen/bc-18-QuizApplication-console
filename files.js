@@ -1,8 +1,21 @@
 
 'use strict';
+
+var firebase = require('firebase');
 var fs = require('fs');
 var path = require('path');
 var jsfile = require('jsonfile');
+
+
+var config = {
+    apiKey: "AIzaSyBBnqAysbJFZF1m95aBIyZAwomCDORMyvs",
+    authDomain: "quiz-app-7755f.firebaseapp.com",
+    databaseURL: "https://quiz-app-7755f.firebaseio.com",
+    storageBucket: "quiz-app-7755f.appspot.com",
+    messagingSenderId: "969428290456"
+  };
+firebase.initializeApp(config);
+var db = firebase.database();
 
 module.exports = 
 {
@@ -31,13 +44,40 @@ module.exports =
     {
       return false;
     }
-
+  },
+  getObjectFromBase: function()
+  {
+    try
+    {
+      db.ref("/quizzes").once("value",function(snap)
+      {
+        snap.forEach(function(snapChild){
+          console.log(snapChild.key);
+        });
+      });
+    }
+    catch (err)
+    {
+      return false;
+    }
   },
   writeObjectToFile :function(obj,fileName)
   {
     try
     {
       jsfile.writeFileSync(fileName,obj);
+      return true;
+    }
+    catch (err)
+    {
+      return false;
+    }
+  },
+  writeObjectToBase :function(obj,dbPath)
+  {
+    try
+    {
+      db.ref("/" + dbPath + "/").set(obj);
       return true;
     }
     catch (err)

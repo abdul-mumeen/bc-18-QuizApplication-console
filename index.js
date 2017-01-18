@@ -59,6 +59,7 @@ var getUsername = function(username)
 		}
 	}
 }
+
 clear();
 console.log(
   chalk.yellow(
