@@ -1,4 +1,5 @@
 //User Object
+'use strict';
 var files = require('../bc-18-quizapplication-console/files.js');
 module.exports = 
 {
