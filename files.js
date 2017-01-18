@@ -29,7 +29,7 @@ module.exports =
     }
     catch (err)
     {
-      return err;
+      return false;
     }
 
   },

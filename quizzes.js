@@ -56,7 +56,7 @@ module.exports.Quizzes.prototype.getQuizzes = function(quizName)
 	return quizz;
 }
 
-module.exports.Quizzes.prototype.takeQuiz = function(quizName,username)
+module.exports.Quizzes.prototype.takeQuiz = function(quizName,username,callback)
 {
 	var found = this.findQuiz(quizName);
 	if (found)
@@ -65,10 +65,13 @@ module.exports.Quizzes.prototype.takeQuiz = function(quizName,username)
 		console.log("You are about to take %s quiz with %d questions",this.name,this.questions.length);
 		inquirer.prompt(this.questions).then(function(answers)
 		{
-			if (answers)
+			var time = objQuiz.expectedTime * 1;
+			setTimeout(function()
 			{
-				return respond(objQuiz,answers,username);
-			}
+				var rpd = respond(objQuiz,answers,username);
+				callback();
+				return rpd;
+			},time);
 		});
 	}
 	else
@@ -95,3 +98,35 @@ function respond(quiz,answers,username)
 	console.log(quizDetail);
 	return quizDetail;
 };
+module.exports.Quizzes.prototype.importToLib = function(quizPath)
+{
+	var obj = files.getObjectFromFile(quizPath);
+	if (obj === false)
+	{
+		return false;
+	}
+	else
+	{
+		if (obj.hasOwnProperty('name') && obj.hasOwnProperty('questions') && obj.hasOwnProperty('answers'))
+		{
+			var quizzes = [];
+			quizzes = files.getObjectFromFile("quizzes.json");
+			if (quizzes !== false)
+			{
+				for (var i = 0; i < quizzes.length; i++)
+				{
+					if (quizzes[i].name === obj.name)
+					{
+						return false;
+					}
+				}
+				quizzes.push(obj);
+				return files.writeObjectToFile(quizzes,"quizzes.json");
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+}

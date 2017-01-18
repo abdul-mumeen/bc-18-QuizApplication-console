@@ -12,10 +12,21 @@ var files 		= require('../bc-18-quizapplication-console/files.js');
 var qz 			= require('../bc-18-quizapplication-console/quizzes.js');
 var usr 		= require('../bc-18-quizapplication-console/users.js');
 
+var showVorpal = function()
+{
+	vorpal.show();
+}
 var tkQuiz = function(quizName,username)
 {
 	var q = new qz.Quizzes();
-	var rp = q.takeQuiz(quizName, username);
+	var rp = q.takeQuiz(quizName, username, showVorpal);
+	return rp;
+}
+
+var importQuiz = function(quizPath)
+{
+	var q = new qz.Quizzes();
+	var rp = q.importToLib(quizPath);
 	return rp;
 }
 /*var obj = files.getObjectFromFile("quizzes.json");
@@ -33,18 +44,18 @@ var getUsername = function(username)
 	var chk = user.checkUserExist();
 	if (chk)
 	{
-		return "Welcome back " + username;
+		return "\t\tWelcome back " + username;
 	}
 	else
 	{
 		var success = user.createUser();
 		if (success)
 		{
-			return "Seems you are a new user, we have created an account for you.";
+			return "\t\tSeems you are a new user, we have created an account for you.";
 		}
 		else
 		{
-			return "User account cannot be created at this time, try again later";
+			return "\t\tUser account cannot be created at this time, try again later";
 		}
 	}
 }
@@ -58,16 +69,17 @@ vorpal
     .delimiter('a-quiz$')
     .show();
 vorpal
-      .command('username [name]', 'get yoor username')
+      .command('user [name]', 'get yoor username')
       .action(function(args, callback) {
       	if(args.name === undefined)
       	{
-      		this.log("You need to enter a username with that command");
+      		this.log("\t\tYou need to enter a username with that command.");
+      		vorpal.execSync('help');
       	}
       	else
       	{
       		username = args.name;
-        	this.log(getUsername(args.name));
+        	this.log(getUsername(username));
     	}
         callback();
       });
@@ -86,18 +98,20 @@ vorpal
 	      		}
 	      		else
 	      		{
-	      			this.log("You need to enter a quiz name from the list of quizzes in the local storage");
+	      			this.log("\t\tYou need to enter a quiz name from the list of quizzes in the local storage.");
+	      			vorpal.execSync('listquizzes');
 	      			vorpal.show();
 	      		}
   			}
   			else
   			{
-  				this.log("You need to enter your username before you can take a quiz");
+  				this.log("\t\tYou need to enter your username before you can take a quiz.");
   			}
       	}
       	else
       	{
-      		this.log("You need to enter a quiz name with the command");
+      		this.log("\t\tYou need to enter a quiz name with the command.");
+      		vorpal.execSync('help');
       	}
         callback();
       });
@@ -108,9 +122,24 @@ vorpal
         callback();
       });
 vorpal
-      .command('importquiz [filepath]', 'list the quizzes available in local storage')
+      .command('importquiz [filepath]', 'Import a quiz into the local storage.')
       .action(function(args, callback) {
-      	this.log(listQuizzes());
+      	if (args.filepath !== undefined)
+      	{
+      		if(importQuiz(args.filepath))
+      		{
+      			this.log("\t\tQuiz has been successfully imported.");
+      		}
+      		else
+      		{
+      			this.log("\t\tInvalid file path or unsupported format.");
+      		}
+      	}
+      	else
+      	{
+      		this.log("\t\tYou need to enter a file path.");
+      		vorpal.execSync('help');
+      	}
         callback();
       });
 

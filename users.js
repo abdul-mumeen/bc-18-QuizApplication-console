@@ -36,7 +36,7 @@ module.exports.User.prototype.createUser = function()
 	if (users !== false)
 	{
 		var newUser = {
-			"username": this.username
+			"name": this.username
 		};
 		users.push(newUser);
 		success = files.writeObjectToFile(users,"users.json");
