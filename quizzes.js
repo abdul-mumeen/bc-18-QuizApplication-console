@@ -24,7 +24,6 @@ module.exports.Quizzes.prototype.findQuiz = function(quizName)
 			if (quizzes[i].name === quizName)
 			{
 				this.name = quizzes[i].name;
-				//this.noOfQuestions = quizzes[i].questions.length;
 				this.questions = quizzes[i].questions;
 				this.expectedTime = quizzes[i].expectedTime;
 				this.answers = quizzes[i].answers;
@@ -39,7 +38,7 @@ module.exports.Quizzes.prototype.findQuiz = function(quizName)
 
 module.exports.Quizzes.prototype.getQuizzes = function(quizName)
 {
-	var quizz = "";
+	var quizz = "\n\t\t List of Quizzes \n";
 	var quizzes = [];
 	quizzes = files.getObjectFromFile("quizzes.json");
 	if (quizzes !== false)
@@ -51,7 +50,7 @@ module.exports.Quizzes.prototype.getQuizzes = function(quizName)
 	}
 	else
 	{
-		quizz += "\t\t ***There are no quizzes in the local storage***";
+		quizz = "\t\t ***There are no quizzes in the local storage***";
 	}
 	return quizz;
 }
@@ -111,9 +110,18 @@ function respond(quiz,answers,username,usedTime)
 	console.log(quizDetail);
 	return quizDetail;
 };
-module.exports.Quizzes.prototype.importToLib = function(quizPath)
+module.exports.Quizzes.prototype.importToLib = function(quizPathOrQuiz,isQuiz)
 {
-	var obj = files.getObjectFromFile(quizPath);
+	var obj;
+	if (isQuiz)
+	{
+		obj = quizPathOrQuiz;	
+	}
+	else
+	{
+		obj = files.getObjectFromFile(quizPathOrQuiz);
+	}
+	
 	if (obj === false)
 	{
 		return false;

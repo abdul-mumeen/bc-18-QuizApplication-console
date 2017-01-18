@@ -45,16 +45,40 @@ module.exports =
       return false;
     }
   },
-  getObjectFromBase: function()
+  getOnlineQuizzes: function()
   {
     try
     {
-      db.ref("/quizzes").once("value",function(snap)
+      var onlineQuizzes = [];
+      db.ref("/quizzes").on("value",function(snap)
       {
         snap.forEach(function(snapChild){
-          console.log(snapChild.key);
+          onlineQuizzes.push(snapChild.key);
         });
       });
+      return onlineQuizzes;
+    }
+    catch (err)
+    {
+      return false;
+    }
+  },
+  getOnlineQuiz: function(quizName)
+  {
+    try
+    {
+      var onlineQuiz = {};
+      db.ref("/quizzes").on("value",function(snap)
+      {
+        snap.forEach(function(snapChild){
+          if(snapChild.key === quizName)
+          {
+            omlineQuiz[snapChild.key] = snapChild.val();
+            return onlineQuiz;
+          }
+        });
+      });
+      return false;
     }
     catch (err)
     {
@@ -73,11 +97,13 @@ module.exports =
       return false;
     }
   },
-  writeObjectToBase :function(obj,dbPath)
+  writeObjectToBase :function(obj)
   {
     try
     {
-      db.ref("/" + dbPath + "/").set(obj);
+      var newQuizRef = db.ref("/quizzes").push();
+      newQuizRef.set(obj);
+     // db.ref("/" + dbPath + "/").set(obj);
       return true;
     }
     catch (err)

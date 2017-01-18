@@ -11,6 +11,7 @@ var vorpal 		= require('vorpal')(), username = "";
 var files 		= require('../bc-18-quizapplication-console/files.js');
 var qz 			= require('../bc-18-quizapplication-console/quizzes.js');
 var usr 		= require('../bc-18-quizapplication-console/users.js');
+var oq	 		= require('../bc-18-quizapplication-console/onlinequizzes.js');
 
 var showVorpal = function()
 {
@@ -26,7 +27,7 @@ var tkQuiz = function(quizName,username)
 var importQuiz = function(quizPath)
 {
 	var q = new qz.Quizzes();
-	var rp = q.importToLib(quizPath);
+	var rp = q.importToLib(quizPath,false);
 	return rp;
 }
 /*var obj = files.getObjectFromFile("quizzes.json");
@@ -63,7 +64,7 @@ var getUsername = function(username)
 clear();
 console.log(
   chalk.yellow(
-    figlet.textSync('A-QUIZ', { horizontalLayout: 'full' })
+    figlet.textSync('--A-QUIZ--', { horizontalLayout: 'full' })
   )
 );
 vorpal
@@ -143,4 +144,17 @@ vorpal
       	}
         callback();
       });
-
+vorpal
+      .command('listquizzes online', 'list the quizzes available online')
+      .action(function(args, callback) {
+      	var list = oq.getQuizzes();
+      	if (list === false)
+      	{
+      		this.log("\n\t\t\t Unable to retrieve quizzes! \n");
+      	}
+      	else
+      	{
+      		this.log(list);
+      	}
+        callback();
+      });
