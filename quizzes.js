@@ -62,16 +62,19 @@ module.exports.Quizzes.prototype.takeQuiz = function(quizName,username,callback)
 	if (found)
 	{
 		var objQuiz = this;
-		console.log("You are about to take %s quiz with %d questions",this.name,this.questions.length);
+		console.log("\tYou are about to take %s quiz with %d questions."
+			+ "\n\tTime Duration is %d s.",this.name,this.noOfQuestions,this.expectedTime);
+		var usedTime = 0;
+		var myTimer = setInterval(function()
+		{
+			usedTime += 1;
+		},1000);
 		inquirer.prompt(this.questions).then(function(answers)
 		{
-			var time = objQuiz.expectedTime * 1;
-			setTimeout(function()
-			{
-				var rpd = respond(objQuiz,answers,username);
-				callback();
-				return rpd;
-			},time);
+			clearInterval(myTimer);
+			var rpd = respond(objQuiz,answers,username,usedTime);
+			callback();
+			//return rpd;
 		});
 	}
 	else
@@ -79,22 +82,32 @@ module.exports.Quizzes.prototype.takeQuiz = function(quizName,username,callback)
 		return false;
 	}
 }
-function respond(quiz,answers,username)
+function respond(quiz,answers,username,usedTime)
 {
-	var score = 0;
+	var initialScore = 0;
 	var j = 0;
 	for (var i in answers)
 	{
 		if (answers[i] === quiz.answers[j])
 		{
-			score ++;
+			initialScore ++;
 		}
 		j++;
 	}
+	var overTime = 0;
+	var finalScore = initialScore;
+	if (usedTime > quiz.expectedTime)
+	{
+		var diff = usedTime - quiz.expectedTime;
+		overTime = Math.floor(diff / quiz.expectedTime) * initialScore;
+		finalScore = initialScore - overTime;
+		overTime = -overTime;
+	}
 	var quizDetail = "\n\t\t\tQuiz Details\n" +
 					"\t\t Quiz Name: " + quiz.name + "\n\t\t Number of Questions: " +
-					quiz.noOfQuestions + "\n\t\t Time: " + quiz.expectedTime +
-					"\n\t\t Score: " + score + "\n" + "\t\t Taken By: " + username + "\n";
+					quiz.noOfQuestions + "\n\t\t Duration: " + quiz.expectedTime +
+					"\n\t\t Score: " + initialScore + "\n\t\t Overtime: "  + overTime +
+					"\n\t\t Final Score: " + finalScore + "\n\t\t Taken By: " + username + "\n";
 	console.log(quizDetail);
 	return quizDetail;
 };
