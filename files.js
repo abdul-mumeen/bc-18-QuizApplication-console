@@ -19,20 +19,7 @@ var db = firebase.database();
 
 module.exports = 
 {
-  getCurrentDirectoryBase : function() 
-  {
-    return path.basename(process.cwd());
-  },
-
-  fileExists : function(filePath) 
-  {
-    try {
-      return fs.statSync(filePath).isDirectory();
-    } catch (err) {
-      return false;
-    }
-  },
-
+  
   //This function get reads the file and return the array of quizzez
   getObjectFromFile: function(fileName)
   {

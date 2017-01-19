@@ -26,8 +26,9 @@ var tkQuiz = function(quizName,username)
 
 var importQuiz = function(quizPath)
 {
+	var path = quizPath.replace(/\\/g,"/");
 	var q = new qz.Quizzes();
-	var rp = q.importToLib(quizPath,false);
+	var rp = q.importToLib(path,false);
 	return rp;
 }
 /*var obj = files.getObjectFromFile("quizzes.json");
