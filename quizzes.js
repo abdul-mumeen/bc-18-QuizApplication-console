@@ -100,6 +100,10 @@ function respond(quiz,answers,username,usedTime)
 		var diff = usedTime - quiz.expectedTime;
 		overTime = Math.floor(diff / quiz.expectedTime) * initialScore;
 		finalScore = initialScore - overTime;
+		if (finalScore < 0)
+		{
+			finalScore = 0;
+		}
 		overTime = -overTime;
 	}
 	var quizDetail = "\n\t\t\tQuiz Details\n" +
