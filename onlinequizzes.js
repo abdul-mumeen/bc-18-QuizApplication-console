@@ -52,11 +52,12 @@ module.exports =
 	{
 		module.exports.checkQuiz(quizName,function(found)
 		{
+			var downloaded = false;
 			if (found)
 			{
 				files.getOnlineQuiz(quizName,function(objQuiz)
 					{
-						var downloaded = false;
+						
 						if (objQuiz)						
 						{
 							var quizWrite = new qz.Quizzes();
@@ -67,6 +68,7 @@ module.exports =
 			}
 			else
 			{
+				callback(downloaded);
 				return false;
 			}
 		});
@@ -97,6 +99,7 @@ module.exports =
 					break;
 				}
 			}
+			callback(false);
 		}
 		else
 		{

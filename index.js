@@ -68,12 +68,12 @@ console.log(
   )
 );
 console.log(
-	chalk.green("\t\t\tWelcome to Andela Quiz!\n \t\tEnter help to see a list of command to assist you."))
+	chalk.green("\t\t\tWelcome to Andela Quiz!\n \t\tEnter help to see a list of commands to assist you."))
 vorpal
     .delimiter('a-quiz$')
     .show();
 vorpal
-      .command('user [name]', 'get yoor username')
+      .command('user [name]', 'log you in with the username supplied')
       .action(function(args, callback) {
       	if(args.name === undefined)
       	{

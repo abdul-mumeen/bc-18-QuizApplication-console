@@ -101,9 +101,15 @@ module.exports =
   {
     try
     {
-      
-      var newQuizRef = db.ref("quizzes/");
-      newQuizRef.set(obj);
+      var key = "";
+      var value = "";
+      for (var i in obj)
+      {
+        key = i;
+        value = obj[i];
+      }
+      var newQuizRef = db.ref("quizzes/" + key);
+      newQuizRef.set(value);
      // db.ref("/" + dbPath + "/").set(obj);
       return true;
     }
