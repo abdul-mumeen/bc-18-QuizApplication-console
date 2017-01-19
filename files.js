@@ -101,8 +101,8 @@ module.exports =
   {
     try
     {
-      var newQuizRef = db.ref("/quizzes").push();
-      newQuizRef.set(obj);
+      var newQuizRef = db.ref("/quizzes/").push(obj);
+      //newQuizRef.set(obj);
      // db.ref("/" + dbPath + "/").set(obj);
       return true;
     }

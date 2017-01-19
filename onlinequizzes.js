@@ -74,7 +74,14 @@ module.exports =
 			{
 				if (quizzes[i].name === quizName)
 				{
-					return (files.writeObjectToBase(oc.ConvertLocalObjectToOnline(quizzes[i])));
+					if (!module.exports.checkQuiz(quizName))
+					{
+						return (files.writeObjectToBase(oc.ConvertLocalObjectToOnline(quizzes[i])));
+					}
+					else
+					{
+						return false;
+					}
 				}
 			}
 			return false;

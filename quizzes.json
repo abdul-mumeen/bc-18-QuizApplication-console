@@ -1,1 +1,97 @@
-[{"name":"physics","time":20,"noOfQuestions":10,"expectedTime":5,"questions":[{"name":"question1","message":"What is your first name?","type":"rawlist","choices":["Red","Orange","Yellow"]},{"name":"question2","message":"What is your last name?","type":"rawlist","choices":["Red","Orange","Yellow"]}],"answers":["Orange","Yellow"]},{"name":"chemistry","time":20,"noOfQuestions":10},{"name":"biology","time":20,"noOfQuestions":10,"expectedTime":5,"questions":[{"name":"question1","message":"What is your first name?","type":"rawlist","choices":["Red","Orange","Yellow"]},{"name":"question2","message":"What is your last name?","type":"rawlist","choices":["Red","Orange","Yellow"]}],"answers":["Orange","Yellow"]}]
+[{
+	"name": "biology",
+	"noOfQuestions": 3,
+	"expectedTime": 5,
+	"questions" : [{
+					  "name": "question1",
+					  "message": "The study of the way individual traits are transferred is called",
+					  "type": "rawlist",
+					  "choices": ["Ecology", "Genetics", "Medicine"]
+					},
+					{
+					  "name": "question2",
+					  "message": "Of the following elements, which is the least common in living organisms?",
+					  "type": "rawlist",
+					  "choices": ["Oxygen", "Carbon", "Hydrogen"]
+					},
+					{
+					  "name": "question3",
+					  "message": "Which of the following is not one of the characteristics of a living thing?",
+					  "type": "rawlist",
+					  "choices": ["Movement", "Reproduction", "Hibernate"]
+					}],
+	"answers": ["Genetics","Carbon","Hibernate"]
+},
+{
+	"name": "chemistry",
+	"noOfQuestions": 3,
+	"expectedTime": 4,
+	"questions" : [{
+					  "name": "question1",
+					  "message": "Water is the composition of Hydrogen and _____?",
+					  "type": "rawlist",
+					  "choices": ["Oxygen", "Carbon", "Hydrogen"]
+					},
+					{
+					  "name": "question2",
+					  "message": "The strongest and most stable chemical bonds are?",
+					  "type": "rawlist",
+					  "choices": ["Covalent", "Ionic", "Hydrogen"]
+					},
+					{
+					  "name": "question3",
+					  "message": "Which of the pHs listed below represents the strongest Acid?",
+					  "type": "rawlist",
+					  "choices": ["7", "5", "2"]
+					}],
+	"answers": ["Oxygen","Covalent","2"]
+},
+{
+	"name": "physics",
+	"noOfQuestions": 3,
+	"expectedTime": 7,
+	"questions" : [{
+					  "name": "question1",
+					  "message": "A magnifying glass is what type of lens?",
+					  "type": "rawlist",
+					  "choices": ["Contact", "Reading", "Concave"]
+					},
+					{
+					  "name": "question2",
+					  "message": "A person who studies physics is known as a?",
+					  "type": "rawlist",
+					  "choices": ["Physicist", "Physician", "Physiologist"]
+					},
+					{
+					  "name": "question3",
+					  "message": "Electric power is typically measured in what units?",
+					  "type": "rawlist",
+					  "choices": ["Watts", "Amperes", "Volts"]
+					}],
+	"answers": ["Concave","Physicist","Watts"]
+},
+{
+	"name": "computer",
+	"noOfQuestions": 3,
+	"expectedTime": 5,
+	"questions" : [{
+					  "name": "question1",
+					  "message": "Complete this quote 'Computers are useless. They can only give you ______' Pablo Picasso",
+					  "type": "rawlist",
+					  "choices": ["Pictures", "Answers", "Headaches"]
+					},
+					{
+					  "name": "question2",
+					  "message": "Javascript is a trademark of which company?",
+					  "type": "rawlist",
+					  "choices": ["Oracle", "Google", "Facebook"]
+					},
+					{
+					  "name": "question3",
+					  "message": "A true or false statement expected to always be true is an",
+					  "type": "rawlist",
+					  "choices": ["Exception", "Expression", "Assertion"]
+					}],
+	"answers": ["Answers","Oracle","Assertion"]
+}
+]

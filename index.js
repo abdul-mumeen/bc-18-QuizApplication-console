@@ -67,6 +67,8 @@ console.log(
     figlet.textSync('--A-QUIZ--', { horizontalLayout: 'full' })
   )
 );
+console.log(
+	chalk.green("\t\t\tWelcome to Andela Quiz!\n \t\tEnter help to see a list of command to assist you."))
 vorpal
     .delimiter('a-quiz$')
     .show();
@@ -155,6 +157,48 @@ vorpal
       	else
       	{
       		this.log(list);
+      	}
+        callback();
+      });
+vorpal
+      .command('uploadquiz [quizName]', 'Upload selected quiz from local storage to online repo.')
+      .action(function(args, callback) {
+      	if (args.quizName !== undefined)
+      	{
+      		if(oq.uploadQuiz(args.quizName))
+      		{
+      			this.log("\t\tQuiz has been successfully uploaded.\n");
+      		}
+      		else
+      		{
+      			this.log("\t\tQuiz not found or already existed online.");
+      		}
+      	}
+      	else
+      	{
+      		this.log("\t\tYou need to enter a quiz name.");
+      		vorpal.execSync('help');
+      	}
+        callback();
+      });
+vorpal
+      .command('downloadquiz [quizName]', 'Download selected quiz from oniine repo to local storage.')
+      .action(function(args, callback) {
+      	if (args.quizName !== undefined)
+      	{
+      		if(oq.downloadQuiz(args.quizName))
+      		{
+      			this.log("\t\tQuiz has been successfully downloaded.\n");
+      		}
+      		else
+      		{
+      			this.log("\t\tQuiz not found or already existed in local storage.");
+      		}
+      	}
+      	else
+      	{
+      		this.log("\t\tYou need to enter a quiz name.");
+      		vorpal.execSync('help');
       	}
         callback();
       });
