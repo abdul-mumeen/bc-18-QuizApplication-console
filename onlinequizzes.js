@@ -5,65 +5,73 @@ var qz = require('../bc-18-quizapplication-console/quizzes.js');
 var oc = require('../bc-18-quizapplication-console/objectconverter.js');
 module.exports = 
 {
-	getQuizzes : function()
+	getQuizzes : function(callback)
 	{
-		var quizzes = files.getOnlineQuizzes();
-		if (quizzes !== false && quizzes.length > 0)
-		{
-			var reQuizzes = "\n\t\t List of Online Quizzes \n";
-			for (var i = 0; i < quizzes.length; i++)
+		files.getOnlineQuizzes(function(quizzes)
 			{
-				reQuizzes += "\t\t" + quizzes[i] + "\n";
-			}
-			return reQuizzes;
-		}
-		else
-		{
-			return false;
-		}
-	},
-	checkQuiz: function(quiz)
-	{
-		var quizzes = files.getOnlineQuizzes();
-		if (quizzes !== false)
-		{
-			var found = false;
-			for (var i = 0; i < quizzes.length; i++)
-			{
-				if(quizzes[i] === quiz)
+				if (quizzes !== false && quizzes.length > 0)
 				{
-					return true;
+					var reQuizzes = "\n\t\t List of Online Quizzes \n";
+					for (var i = 0; i < quizzes.length; i++)
+					{
+						reQuizzes += "\t\t" + quizzes[i] + "\n";
+					}
+					callback(reQuizzes);
 				}
-			}
-			return found;
-		}
-		else
-		{
-			return false;
-		}
+				else
+				{
+					callback(false);
+				}
+			});
+	},
+	checkQuiz: function(quiz,callback)
+	{
+		files.getOnlineQuizzes(function(quizzes)
+			{
+				var found = false;
+				if (quizzes !== undefined)
+				{									
+					for (var i = 0; i < quizzes.length; i++)
+					{
+						if(quizzes[i] === quiz)
+						{
+							found = true;
+							break;
+						}
+					}
+				}
+				else
+				{
+					found = false;
+				}
+				callback(found);
+			});
 	},
 
-	downloadQuiz: function(quizName)
+	downloadQuiz: function(quizName,callback)
 	{
-		if (module.exports.checkQuiz(quizName))
+		module.exports.checkQuiz(quizName,function(found)
 		{
-			var objQuiz = files.getOnlineQuiz(quizName);
-			if (!objQuiz)
+			if (found)
 			{
-				return false;
+				files.getOnlineQuiz(quizName,function(objQuiz)
+					{
+						var downloaded = false;
+						if (objQuiz)						
+						{
+							var quizWrite = new qz.Quizzes();
+							downloaded = quizWrite.importToLib(oc.ConvertOnlineObjectToLocal(objQuiz),true);
+						}
+						callback(downloaded);
+					});
 			}
 			else
 			{
-				var quizWrite = new qz.Quizzes();
-				return quizWrite.importToLib(oc.ConvertOnlineObjectToLocal(objQuiz),true);
+				return false;
 			}
-		}
-		else
-		{
-			return false;
-		}
+		});
 	},
-	uploadQuiz: function(quizName)
+	uploadQuiz: function(quizName, callback)
 	{
 		var found = false;
 		var quizzes = [];
@@ -74,17 +82,21 @@ module.exports =
 			{
 				if (quizzes[i].name === quizName)
 				{
-					if (!module.exports.checkQuiz(quizName))
-					{
-						return (files.writeObjectToBase(oc.ConvertLocalObjectToOnline(quizzes[i])));
-					}
-					else
-					{
-						return false;
-					}
+					module.exports.checkQuiz(quizName,function(found)
+						{
+							if (!found)
+							{							
+								var onlineObj = oc.ConvertLocalObjectToOnline(quizzes[i]);
+								callback(files.writeObjectToBase(onlineObj));								
+							}
+							else
+							{
+								callback(false);
+							}
+						});
+					break;
 				}
 			}
-			return false;
 		}
 		else
 		{

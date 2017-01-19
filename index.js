@@ -149,56 +149,66 @@ vorpal
 vorpal
       .command('listquizzes online', 'list the quizzes available online')
       .action(function(args, callback) {
-      	var list = oq.getQuizzes();
-      	if (list === false)
-      	{
-      		this.log("\n\t\t\t Unable to retrieve quizzes! \n");
-      	}
-      	else
-      	{
-      		this.log(list);
-      	}
-        callback();
+      	oq.getQuizzes(function(list)
+      		{
+      			if (list === false)
+		      	{
+		      		console.log("\n\t\t\t Unable to retrieve online quizzes at this time! \n");
+		      	}
+		      	else
+		      	{
+		      		console.log(list);
+		      	}
+		        callback();
+      		});
       });
 vorpal
       .command('uploadquiz [quizName]', 'Upload selected quiz from local storage to online repo.')
       .action(function(args, callback) {
       	if (args.quizName !== undefined)
       	{
-      		if(oq.uploadQuiz(args.quizName))
-      		{
-      			this.log("\t\tQuiz has been successfully uploaded.\n");
-      		}
-      		else
-      		{
-      			this.log("\t\tQuiz not found or already existed online.");
-      		}
+      		oq.uploadQuiz(args.quizName,function(done)
+      			{
+      				if(done)
+		      		{
+		      			console.log("\t\tQuiz has been successfully uploaded.\n");
+		      		}
+		      		else
+		      		{
+		      			console.log("\t\tQuiz not found or already existed online.");
+		      		}
+		      		callback();
+      			});
       	}
       	else
       	{
       		this.log("\t\tYou need to enter a quiz name.");
       		vorpal.execSync('help');
+      		callback();
       	}
-        callback();
       });
 vorpal
       .command('downloadquiz [quizName]', 'Download selected quiz from oniine repo to local storage.')
       .action(function(args, callback) {
       	if (args.quizName !== undefined)
       	{
-      		if(oq.downloadQuiz(args.quizName))
+      		oq.downloadQuiz(args.quizName,function(downloaded)
       		{
-      			this.log("\t\tQuiz has been successfully downloaded.\n");
-      		}
-      		else
-      		{
-      			this.log("\t\tQuiz not found or already existed in local storage.");
-      		}
+      			if(downloaded)
+	      		{
+	      			console.log("\t\tQuiz has been successfully downloaded.\n");
+	      		}
+	      		else
+	      		{
+	      			console.log("\t\tQuiz not found or already existed in local storage.");
+	      		}
+	      		callback();
+	      	});
       	}
       	else
       	{
       		this.log("\t\tYou need to enter a quiz name.");
       		vorpal.execSync('help');
+      		callback();
       	}
-        callback();
       });
