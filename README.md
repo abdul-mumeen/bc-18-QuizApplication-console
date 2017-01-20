@@ -6,7 +6,7 @@
 		* A user supply a username before taking a quiz.
 		* A user can select a quiz from of liat of quizzes available locally.
 	* Allows users to view quizzes available both locally and online.
-	* Allows users to import quiz from a JSON file into the local storage.
+	* Allows users to import quiz from a JSON file into the local storage. The JSON file has to be in a format like this [**one**](../textquiz.json).
 	* Allows users to download quizzes from the online repository to the local storage.
 	* Allows users to publish quizzes available locally to the online repository.
 * Go to [A-Quiz](https://github.com/phabbs/bc-18-QuizApplication-console) to download the app.

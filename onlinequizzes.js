@@ -98,8 +98,14 @@ module.exports =
 						});
 					break;
 				}
+				else
+				{
+					if (i === quizzes.length - 1)
+					{
+						callback(false);
+					}
+				}
 			}
-			//callback(false);
 		}
 		else
 		{
