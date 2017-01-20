@@ -99,7 +99,7 @@ module.exports =
 					break;
 				}
 			}
-			callback(false);
+			//callback(false);
 		}
 		else
 		{
